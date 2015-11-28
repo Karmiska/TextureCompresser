@@ -1,0 +1,19 @@
+import platform
+
+src = []
+src.append('src/main.cpp')
+src.append('src/Color.cpp')
+src.append('src/File.cpp')
+src.append('src/image/Image.cpp')
+src.append('src/bmp/Bmp.cpp')
+src.append('src/dds/Dds.cpp')
+
+env = Environment()
+env['SYSTEM'] = platform.system().lower()
+
+if env['SYSTEM'] in ['linux','darwin']:
+	env.Append(CXXFLAGS="-std=c++0x")
+if env['SYSTEM'] == 'windows':
+	env.Append(CXXFLAGS="/EHsc")
+
+env.Program('TextureCompresser', source = src)
